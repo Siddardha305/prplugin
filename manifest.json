@@ -1,0 +1,50 @@
+{
+  "manifestVersion": 5,
+  "id": "com.smartadverts.premieretools",
+  "name": "SmartAdverts Premiere Tools",
+  "version": "1.0.0",
+  "main": "index.html",
+  "host": {
+    "app": "premierepro",
+    "minVersion": "25.0.0"
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "smartadvertsPanel",
+      "label": {
+        "default": "SmartAdverts Premiere Tools"
+      },
+      "minimumSize": {
+        "width": 240,
+        "height": 320
+      },
+      "maximumSize": {
+        "width": 900,
+        "height": 1600
+      },
+      "preferredDockedSize": {
+        "width": 320,
+        "height": 700
+      },
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "assets/icons/icon-23.png",
+          "scale": [1, 2],
+          "theme": ["darkest", "dark", "medium", "lightest"]
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "width": 23,
+      "height": 23,
+      "path": "assets/icons/icon-23.png",
+      "scale": [1, 2],
+      "theme": ["darkest", "dark", "medium", "lightest"]
+    }
+  ]
+}

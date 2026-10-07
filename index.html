@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartAdverts Premiere Tools</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Header & Connection Status -->
+    <header class="panel-header">
+      <div class="brand">
+        <div class="brand-icon">SA</div>
+        <div>
+          <div class="brand-title">SmartAdverts</div>
+          <div class="brand-subtitle">Premiere Tools</div>
+        </div>
+      </div>
+      <div class="connection-indicator" id="connection-badge" title="Host Connection Status">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="connection-status-text">Connecting...</span>
+      </div>
+    </header>
+
+    <!-- Real-time Feedback Banner -->
+    <div id="status-banner" class="status-banner" role="alert">
+      <span class="status-banner-icon" id="status-banner-icon">ℹ</span>
+      <span class="status-banner-text" id="status-banner-text">Plugin initialized</span>
+    </div>
+
+    <!-- 1. Live Project & Sequence Information Card -->
+    <section class="card" id="project-info-card">
+      <div class="card-header">
+        <span class="card-title">Project Information</span>
+        <button id="btn-refresh" class="btn btn-sm btn-accent-subtle" title="Query Premiere Pro in real time">
+          <span>🔄</span> Refresh
+        </button>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-row">
+          <span class="info-label">Project:</span>
+          <span class="info-value" id="val-project-name">Checking...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Sequence:</span>
+          <span class="info-value" id="val-sequence-name">Checking...</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Resolution:</span>
+          <span class="info-value mono" id="val-resolution">--</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Aspect Ratio:</span>
+          <span class="info-value" id="val-aspect-ratio">--</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Current Time:</span>
+          <span class="info-value mono" id="val-current-time">00:00:00:00</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Status:</span>
+          <span class="info-value" id="val-host-status">Connecting...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Aspect Ratio Quick Sequence Generator -->
+    <section class="card" id="aspect-ratio-section">
+      <div class="card-header">
+        <span class="card-title">Aspect Ratio Sequences</span>
+      </div>
+      <div class="ratio-grid">
+        <button class="ratio-btn" id="btn-ratio-16-9" title="Create 16:9 Landscape Sequence (1920x1080)">
+          <span class="ratio-title">16 : 9</span>
+          <span class="ratio-res">1920 × 1080</span>
+          <span class="ratio-tag">YouTube</span>
+        </button>
+        <button class="ratio-btn" id="btn-ratio-9-16" title="Create 9:16 Vertical Sequence (1080x1920)">
+          <span class="ratio-title">9 : 16</span>
+          <span class="ratio-res">1080 × 1920</span>
+          <span class="ratio-tag">Shorts/Reels</span>
+        </button>
+        <button class="ratio-btn" id="btn-ratio-1-1" title="Create 1:1 Square Sequence (1080x1080)">
+          <span class="ratio-title">1 : 1</span>
+          <span class="ratio-res">1080 × 1080</span>
+          <span class="ratio-tag">Square</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. Timeline & Marker Tool -->
+    <section class="card" id="marker-section">
+      <div class="card-header">
+        <span class="card-title">Timeline Markers</span>
+      </div>
+      <div class="input-row">
+        <input type="text" id="input-marker-name" value="SmartAdverts Marker" placeholder="Marker Label" />
+      </div>
+      <div class="btn-group equal">
+        <button id="btn-add-marker" class="btn btn-primary" title="Add marker at current playhead position">
+          <span>📍</span> Add Marker
+        </button>
+        <button id="btn-sync-time" class="btn" title="Get current playhead position">
+          <span>⏱</span> Get Time
+        </button>
+      </div>
+    </section>
+
+    <!-- 4. Video Tools Overview & Status -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-title">Video Tools</span>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item interactive" id="item-video-remove-silence">
+          <div class="feature-info">
+            <span class="feature-name">1. Remove Silence</span>
+            <span class="feature-desc">Auto-cut silent audio gaps</span>
+          </div>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+        <div class="feature-item interactive" id="item-video-add-marker">
+          <div class="feature-info">
+            <span class="feature-name">2. Add Marker</span>
+            <span class="feature-desc">Add marker at current playhead</span>
+          </div>
+          <span class="badge badge-ready">Active</span>
+        </div>
+        <div class="feature-item interactive" id="item-video-create-seq">
+          <div class="feature-info">
+            <span class="feature-name">3. Create Sequence</span>
+            <span class="feature-desc">Generate preset aspect ratio sequences</span>
+          </div>
+          <span class="badge badge-ready">Active</span>
+        </div>
+        <div class="feature-item interactive" id="item-video-get-info">
+          <div class="feature-info">
+            <span class="feature-name">4. Get Active Sequence Info</span>
+            <span class="feature-desc">Inspect dimensions and playhead</span>
+          </div>
+          <span class="badge badge-ready">Active</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Captions Section -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-title">Captions</span>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item interactive" id="item-caption-tools">
+          <div class="feature-info">
+            <span class="feature-name">5. Caption Tools</span>
+            <span class="feature-desc">Automated subtitle & text helpers</span>
+          </div>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+        <div class="feature-item interactive" id="item-caption-style">
+          <div class="feature-info">
+            <span class="feature-name">6. Apply Caption Style</span>
+            <span class="feature-desc">Brand typography and animation presets</span>
+          </div>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Shorts / Reels Section -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-title">Shorts / Reels</span>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item interactive" id="item-shorts-916">
+          <div class="feature-info">
+            <span class="feature-name">7. Create 9:16 Sequence</span>
+            <span class="feature-desc">1080 × 1920 vertical video</span>
+          </div>
+          <span class="badge badge-ready">Active</span>
+        </div>
+        <div class="feature-item interactive" id="item-shorts-11">
+          <div class="feature-info">
+            <span class="feature-name">8. Create 1:1 Sequence</span>
+            <span class="feature-desc">1080 × 1080 square format</span>
+          </div>
+          <span class="badge badge-ready">Active</span>
+        </div>
+        <div class="feature-item interactive" id="item-shorts-169">
+          <div class="feature-info">
+            <span class="feature-name">9. Create 16:9 Sequence</span>
+            <span class="feature-desc">1920 × 1080 horizontal format</span>
+          </div>
+          <span class="badge badge-ready">Active</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Thumbnail Section -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-title">Thumbnail</span>
+      </div>
+      <div class="feature-list">
+        <div class="feature-item interactive" id="item-thumb-capture">
+          <div class="feature-info">
+            <span class="feature-name">10. Capture Frame Info</span>
+            <span class="feature-desc">Read playhead timecode & frame metadata</span>
+          </div>
+          <span class="badge badge-ready">Active</span>
+        </div>
+        <div class="feature-item interactive" id="item-thumb-export">
+          <div class="feature-info">
+            <span class="feature-name">11. Export Current Frame</span>
+            <span class="feature-desc">Save high-res thumbnail snapshot</span>
+          </div>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Debugging & Console Area -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-title">Debug & Status Log</span>
+        <button id="btn-clear-log" class="btn btn-sm" title="Clear log messages">Clear</button>
+      </div>
+      <div class="debug-container" id="debug-log-content">
+        <div class="log-line log-info">[System] SmartAdverts Premiere Tools initialized.</div>
+      </div>
+    </section>
+
+    <!-- Feature Info / Roadmap Modal -->
+    <div id="info-modal" class="info-modal">
+      <div class="modal-content">
+        <div class="modal-title" id="modal-title">Feature Notice</div>
+        <div class="modal-body" id="modal-body">Feature details...</div>
+        <button id="modal-btn-close" class="btn btn-primary btn-full">Close</button>
+      </div>
+    </div>
+
+    <!-- Panel Footer -->
+    <footer class="panel-footer">
+      SmartAdverts Premiere Tools v1.0.0 (UXP)
+    </footer>
+
+  </div>
+
+  <!-- Scripts (Load modules) -->
+  <script src="src/utils.js"></script>
+  <script src="src/premiere.js"></script>
+  <script src="src/sequence.js"></script>
+  <script src="src/timeline.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
